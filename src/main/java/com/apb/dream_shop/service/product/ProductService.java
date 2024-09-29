@@ -1,6 +1,6 @@
 package com.apb.dream_shop.service.product;
 
-import com.apb.dream_shop.exception.ProductNotFoundException;
+import com.apb.dream_shop.exception.ResourceNotFoundException;
 import com.apb.dream_shop.modal.Category;
 import com.apb.dream_shop.modal.Product;
 import com.apb.dream_shop.repository.CategoryRepository;
@@ -50,7 +50,7 @@ public class ProductService implements IProductService {
 
     @Override
     public Product getProductById(Long productId) {
-        return productRepo.findById(productId).orElseThrow(() -> new ProductNotFoundException("Product Not Found"));
+        return productRepo.findById(productId).orElseThrow(() -> new ResourceNotFoundException("Product Not Found"));
     }
 
     @Override
@@ -59,7 +59,7 @@ public class ProductService implements IProductService {
         return productRepo.findById(productId)
                 .map(existingProduct -> updateExistingProduct(existingProduct, request))
                 .map(productRepo::save)
-                .orElseThrow(() -> new ProductNotFoundException("Product Not Found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Product Not Found"));
     }
 
     private Product updateExistingProduct(Product existingProduct, UpdateProductRequest request) {
@@ -79,7 +79,7 @@ public class ProductService implements IProductService {
     public void deleteProduct(Long productId) {
         productRepo.findById(productId).ifPresentOrElse(productRepo::delete,
                 () -> {
-                    throw new ProductNotFoundException("Product Not Found");
+                    throw new ResourceNotFoundException("Product Not Found");
                 }
         );
     }
