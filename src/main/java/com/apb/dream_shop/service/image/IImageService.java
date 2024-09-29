@@ -12,7 +12,7 @@ public interface IImageService {
 
     void deleteImageById(Long imageId);
 
-    List<ImageDTO> saveImage(List<MultipartFile> files, Long productId);
+    List<ImageDTO> saveImages(List<MultipartFile> files, Long productId);
 
     Image updateImage(MultipartFile file, Long productId);
 }
