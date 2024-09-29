@@ -22,7 +22,7 @@ public class Image {
     private String fileType;
 
     @Lob
-    private Blob blobFile;
+    private Blob image;
     private String downloadUrl;
 
     @ManyToOne
