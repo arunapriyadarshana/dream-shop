@@ -31,7 +31,7 @@ public class ProductController {
         try {
             Product product = productService.getProductById(productId);
             return ResponseEntity.ok(new ApiResponse("success", product));
-        } catch (ResourceNotFoundException e) {
+        } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ApiResponse("error " + e.getMessage(), null));
         }
     }
@@ -62,7 +62,7 @@ public class ProductController {
         try {
             productService.deleteProduct(id);
             return ResponseEntity.ok(new ApiResponse("delete success", null));
-        } catch (ResourceNotFoundException e) {
+        } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ApiResponse("error " + e.getMessage(), null));
         }
     }
@@ -121,6 +121,30 @@ public class ProductController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ApiResponse("error " + e.getMessage(), null));
         }
 
+    }
+
+    @GetMapping("/category-brand")
+    public ResponseEntity<ApiResponse> getProductByCategoryAndBrand(@RequestParam String category, @RequestParam String brand) {
+        try {
+            List<Product> products = productService.getProductByCategoryAndBrand(category, brand);
+            if (products.isEmpty()) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ApiResponse("error " + "No any Product found", null));
+            }
+            return ResponseEntity.ok(new ApiResponse("success", products));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ApiResponse("error " + e.getMessage(), null));
+        }
+
+    }
+
+    @GetMapping("/count")
+    public ResponseEntity<ApiResponse> getProductCountByBrandAndName(@RequestParam String brand, @RequestParam String name) {
+        try {
+            Long count = productService.countProductByBrandAndName(brand, name);
+            return ResponseEntity.ok(new ApiResponse("success", count));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ApiResponse("error " + e.getMessage(), null));
+        }
     }
 
 
