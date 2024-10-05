@@ -1,5 +1,6 @@
 package com.apb.dream_shop.service.product;
 
+import com.apb.dream_shop.dto.ProductDTO;
 import com.apb.dream_shop.modal.Product;
 import com.apb.dream_shop.request.AddProductRequest;
 import com.apb.dream_shop.request.UpdateProductRequest;
@@ -29,5 +30,9 @@ public interface IProductService {
     List<Product> getProductByBrandAndName(String brand, String name);
 
     Long countProductByBrandAndName(String brand, String name);
+
+    List<ProductDTO> getConvertedProducts(List<Product> products);
+
+    ProductDTO convertToDTO(Product product);
 
 }
